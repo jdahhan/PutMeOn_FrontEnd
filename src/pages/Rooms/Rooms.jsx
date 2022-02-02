@@ -85,6 +85,7 @@ export default function Rooms() {
             key={`${room.roomName}-${index}`}
             name={room.roomName}
             userCount={room.num_users}
+            desc="MORE_DATA"
           />
         )) : (
           <div className="rooms-empty">
