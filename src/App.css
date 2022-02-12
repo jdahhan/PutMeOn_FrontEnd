@@ -1,11 +1,12 @@
 .root {
-  minHeight: 100vh;
+  min-height: 100vh;
   width: 100%;
   padding: 0;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #EEEAE4;
 
 }
 
@@ -28,8 +29,7 @@
 .page-button {
   min-width: 300px;
   max-width: 400px;
-  border: 1px solid #94A3B8;
-  background-color: #E2E8F0;
+  background-color: #BFA371;
   padding-right: 25px;
   padding-left: 25px;
   padding-top: 10px;
@@ -43,8 +43,7 @@
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 15px;
-  border: 1px solid #94A3B8;
-  background-color: #E2E8F0;
+  background-color: #BFA371;
   border-radius: 5px;
   cursor: pointer;
 }
