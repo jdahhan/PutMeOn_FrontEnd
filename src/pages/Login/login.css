@@ -1,0 +1,32 @@
+.page-input {
+    min-width: 300px;
+    max-width: 400px;
+    background-color: #BFA371;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+.logo{
+    border: solid black 2px;
+    border-radius: 85px;
+    max-width: 200px;
+    min-height: 120px;
+    color: blue;
+    background-color: #E88D50;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+img{
+    max-width: 200px;
+    min-height: 120px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
