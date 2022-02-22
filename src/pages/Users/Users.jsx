@@ -14,22 +14,29 @@ export default function Users() {
   const [newUserName, setNewUserName] = useState('');
 
   const history = useHistory();
-
+  
+  // const URL = 'https://put-me-on.herokuapp.com/'
+  // uncommenting the above line breaks the code
+  const URL = 'https://demo-repo23.herokuapp.com/'
   useEffect(() => {
-    axios.get('https://demo-repo23.herokuapp.com/users/list')
+    axios.get(URL + 'users/list')
       .then((response) => {
         if (response.data){
+          console.log(response.data); // the response data should print at this point
+          console.log(typeof(response.data)); // either URL should result in the same type
           setUsers(response.data);
+          console.log(response.data); // the response data should print only for the demo repo on this line, implying the issue is setUsers somehow
         }
       })
       .catch(error => {
+        console.log("NOT GOTTEN")
         setError(error);
         console.log(error);
       });
   }, [refresh])
 
   const handleCreateUser = () => {
-    axios.post(`https://demo-repo23.herokuapp.com/users/create/${newUserName}`)
+    axios.post(URL + 'users/create/' + newUserName)
       .then(() => {
         setIsModalOpen(false);
         setRefresh(refresh + 1);
@@ -84,7 +91,7 @@ export default function Users() {
           </div>
         )) : (
           <div className="rooms-empty">
-            <p>Sorry there are no rooms right now... Come back later </p>
+            <p>Sorry there are no users right now... Come back later </p>
           </div>
         )}
       </div>
