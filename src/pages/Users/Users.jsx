@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 
+import {backendurl} from '../../config';
+
 import './users.css';
 
 export default function Users() {
@@ -12,31 +14,25 @@ export default function Users() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newUserName, setNewUserName] = useState('');
+  const [newPassWord, setNewPassWord] = useState('');
 
   const history = useHistory();
-  
-  // const URL = 'https://put-me-on.herokuapp.com/'
-  // uncommenting the above line breaks the code
-  const URL = 'https://demo-repo23.herokuapp.com/'
+
   useEffect(() => {
-    axios.get(URL + 'users/list')
+    axios.get(backendurl + 'users/list')
       .then((response) => {
         if (response.data){
-          console.log(response.data); // the response data should print at this point
-          console.log(typeof(response.data)); // either URL should result in the same type
           setUsers(response.data);
-          console.log(response.data); // the response data should print only for the demo repo on this line, implying the issue is setUsers somehow
         }
       })
       .catch(error => {
-        console.log("NOT GOTTEN")
         setError(error);
         console.log(error);
       });
   }, [refresh])
 
   const handleCreateUser = () => {
-    axios.post(URL + 'users/create/' + newUserName)
+    axios.post(backendurl + 'users/create/' + newUserName + "_" + newPassWord)
       .then(() => {
         setIsModalOpen(false);
         setRefresh(refresh + 1);
@@ -56,6 +52,13 @@ export default function Users() {
             placeholder="User Name"
             value={newUserName}
             onChange={(e) => setNewUserName(e.target.value)}
+          />
+          <input
+            className="user-input"
+            placeholder="password"
+            type="password"
+            value={newPassWord}
+            onChange={(f) => setNewPassWord(f.target.value)}
           />
           <div className="create-actions">
             <button className="button" onClick={handleCreateUser}>Create New User</button>
