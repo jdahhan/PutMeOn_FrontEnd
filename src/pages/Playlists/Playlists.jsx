@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 
-import RoomItem from '../../components/RoomItem/RoomItem';
+import PlaylistItem from '../../components/PlaylistItem/PlaylistItem';
 import PageTitle from '../../components/PageTitle/PageTitle';
 
 import {backendurl} from '../../config';
@@ -84,11 +84,11 @@ export default function Playlists() {
 
       <div className="playlists-list">
         {playlists ? playlists.map((playlist, index) => (
-          <RoomItem
+          <PlaylistItem
             key={`${playlist.playlistName}-${index}`}
             name={playlist.playlistName}
             likeCount={playlist.likes.length}
-            desc="MORE_DATA"
+            songs={playlist.songs}
           />
         )) : (
           <div className="playlists-empty">
