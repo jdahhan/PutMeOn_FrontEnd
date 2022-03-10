@@ -16,16 +16,28 @@ export default function Home(){
         <p className="quote-author">- Donald Knuth</p>
       </div>
       <button
-        onClick={() => navigateToPage('/rooms')}
+        onClick={() => navigateToPage('/playlists')}
         className="page-button"
       >
-        View All Rooms
+        View All Playlists
       </button>
       <button
         onClick={() => navigateToPage('/users')}
         className="page-button"
       >
         View All Users
+      </button> 
+      <button
+        onClick={() => navigateToPage('/NewAccount')}
+        className="page-button"
+      >
+        New Account
+      </button> 
+      <button
+        onClick={() => navigateToPage('/login')}
+        className="page-button"
+      >
+        Login
       </button> 
     </div>
   );

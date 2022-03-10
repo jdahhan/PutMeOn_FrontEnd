@@ -15,7 +15,7 @@ export default function Login(){
       <img className='logo' alt= "headphone" src="images/headphones.png"/>
       <h1>Put Me On</h1>
       <form>
-        <label> Username 
+        <label> Username
             <input class="page-input" type="text" name="username" /> 
         </label>
         <br></br>

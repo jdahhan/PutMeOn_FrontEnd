@@ -1,18 +1,18 @@
-.rooms-error-box {
+.playlists-error-box {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
   background-color: #EF4444;
 }
 
-.rooms-header {
+.playlists-header {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.rooms-list {
+.playlists-list {
   width: 100%;
   display: flex;
   flex-direction: column;

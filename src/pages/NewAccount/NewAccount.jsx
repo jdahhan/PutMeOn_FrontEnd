@@ -7,7 +7,7 @@ export default function NewAccount(){
 
     return(
         <div class="new">
-
+            AAAAAAAAAAAAAAAAAAAAAA
             
         </div>
     );

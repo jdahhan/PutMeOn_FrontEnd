@@ -2,10 +2,9 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Home from './pages/Home/Home';
-import Rooms from './pages/Rooms/Rooms';
+import Playlists from './pages/Playlists/Playlists';
 import Users from './pages/Users/Users';
 import Login from './pages/Login/Login';
-
 import NewAccount from './pages/NewAccount/NewAccount';
 import './App.css';
 
@@ -18,8 +17,8 @@ function App() {
             <Route exact={true} path={'/'}>
               <Home />
             </Route>
-            <Route exact={true} path={'/rooms'}>
-              <Rooms />
+            <Route exact={true} path={'/playlists'}>
+              <Playlists />
             </Route>
             <Route exact={true} path={'/users'}>
               <Users />
@@ -27,7 +26,6 @@ function App() {
             <Route exact={true} path={'/login'}>
               <Login />
             </Route>
-
             <Route exact={true} path={'/NewAccount'}>
               <NewAccount />
             </Route>

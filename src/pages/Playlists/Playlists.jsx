@@ -5,25 +5,28 @@ import {useHistory} from 'react-router-dom';
 import RoomItem from '../../components/RoomItem/RoomItem';
 import PageTitle from '../../components/PageTitle/PageTitle';
 
-import './rooms.css';
+import {backendurl} from '../../config';
 
-export default function Rooms() {
-  const [rooms, setRooms] = useState(undefined);
+
+import './playlists.css';
+
+export default function Playlists() {
+  const [playlists, setPlaylists] = useState(undefined);
   const [error, setError] = useState(undefined);
 
   const [refresh, setRefresh] = useState(undefined);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newRoomName, setNewRoomName] = useState('');
+  const [newPlaylistName, setNewPlaylistName] = useState('');
 
   const history = useHistory();
 
   useEffect(() => {
-    axios.get('https://demo-repo23.herokuapp.com/rooms/list')
+    axios.get(backendurl + 'playlists/list')
       .then((response) => {
         console.log(response.data);
         if (response.data){
-          setRooms(response.data);
+          setPlaylists(response.data);
         }
       })
       .catch(error => {
@@ -32,8 +35,8 @@ export default function Rooms() {
       });
   }, [refresh])
 
-  const handleCreateRoom = () => {
-    axios.post(`https://demo-repo23.herokuapp.com/rooms/create/${newRoomName}`)
+  const handleCreatePlaylist = () => {
+    axios.post(backendurl + `playlists/create/${newPlaylistName}`)
       .then(() => {
         setIsModalOpen(false);
         setRefresh(refresh + 1);
@@ -50,12 +53,12 @@ export default function Rooms() {
         <div className="create-modal">
           <input
             className="room-input"
-            placeholder="Room Name"
-            value={newRoomName}
-            onChange={(e) => setNewRoomName(e.target.value)}
+            placeholder="Playlist Name"
+            value={newPlaylistName}
+            onChange={(e) => setNewPlaylistName(e.target.value)}
           />
           <div className="create-actions">
-            <button className="button" onClick={handleCreateRoom}>Create New Room</button>
+            <button className="button" onClick={handleCreatePlaylist}>Create New Playlist</button>
             <button className="button" onClick={() => setIsModalOpen(false)}> Cancel </button>
           </div>
         </div>
@@ -63,7 +66,7 @@ export default function Rooms() {
 
       <div className="rooms-header">
         <PageTitle
-          text="Rooms"
+          text="Playlists"
         />
         <button
           onClick={() => history.push('/')}
@@ -74,27 +77,27 @@ export default function Rooms() {
       </div>
 
       {error && (
-        <div className="rooms-error-box">
+        <div className="playlists-error-box">
           <p>{error.toString()}</p>
         </div>
       )}
 
-      <div className="rooms-list">
-        {rooms ? rooms.map((room, index) => (
+      <div className="playlists-list">
+        {playlists ? playlists.map((playlist, index) => (
           <RoomItem
-            key={`${room.roomName}-${index}`}
-            name={room.roomName}
-            userCount={room.num_users}
+            key={`${playlist.playlistName}-${index}`}
+            name={playlist.playlistName}
+            likeCount={playlist.likes.length}
             desc="MORE_DATA"
           />
         )) : (
-          <div className="rooms-empty">
-            <p>Sorry there are no rooms right now... Come back later </p>
+          <div className="playlists-empty">
+            <p>Sorry there are no playlists right now... Come back later </p>
           </div>
         )}
       </div>
       <div>
-        <button className="page-button" onClick={() => setIsModalOpen(true)}> Add New Room </button>
+        <button className="page-button" onClick={() => setIsModalOpen(true)}> Add New Playlist </button>
       </div>
     </div>
   )
