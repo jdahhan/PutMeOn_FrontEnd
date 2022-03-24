@@ -17,7 +17,7 @@ export default function Home(){
       </div>
       {(localStorage.getItem('user') != "") &&
         <div>
-          Welcome back, {localStorage.getItem('user')}!  
+          Welcome {localStorage.getItem('user')}!  
         </div>
       }
       <button
@@ -42,18 +42,20 @@ export default function Home(){
           Logout
           </button>
       </div>
-        :<div className='content'><button
-          onClick={() => navigateToPage('/NewAccount')}
-          className="page-button"
-        >
-          New Account
-        </button> 
-        <button
+        :<div className='content'>
+          <button
           onClick={() => navigateToPage('/login')}
           className="page-button"
         >
           Login
         </button> 
+        <button
+          onClick={() => navigateToPage('/NewAccount')}
+          className="page-button"
+        >
+          New Account
+        </button> 
+        
         </div>
       }
     </div>
