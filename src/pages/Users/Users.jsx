@@ -90,7 +90,6 @@ export default function Users() {
             key={`${user.userName}-${index}`}
           >
             <p>{user.userName}</p>
-            <p>{index}</p>
           </div>
         )) : (
           <div className="rooms-empty">

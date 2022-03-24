@@ -1,11 +1,8 @@
-.page-input {
+.pageinput {
     min-width: 300px;
     max-width: 400px;
     background-color: #BFA371;
-    padding-right: 25px;
-    padding-left: 25px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -29,4 +26,7 @@ img{
     margin-left: auto;
     margin-right: auto;
 
+}
+.errors{
+  color: red;
 }
