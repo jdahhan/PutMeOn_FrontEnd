@@ -1,10 +1,12 @@
-# SWE React Demo Project
+# Frontend component for PutMeOn
 
-### Clone the repository
-### `git clone https://github.com/nysteo/swe-react-demo/`
+Frontend deployed to https://putmeon.netlify.app/       
+API currently hosted on https://put-me-on.herokuapp.com/         
+Backend repo at https://github.com/ecabreja623/PutMeOn      
 
+## To run:
 ### CD into the repo
-### `cd swe-react-demo`
+### `cd PutMeOn_Frontend`
 
 ### Install Dependencies
 ### `npm install` (make sure you have npm & node installed)
