@@ -7,19 +7,31 @@ import PageTitle from '../../components/PageTitle/PageTitle';
 
 import {backendurl} from '../../config';
 
+import LoggedIn from '../../components/LoggedIn/LoggedIn';
+
 
 import './playlists.css';
 
 export default function Playlists() {
   const [playlists, setPlaylists] = useState(undefined);
   const [error, setError] = useState(undefined);
+  
+  const [user, setUser] = useState(undefined);
 
   const [refresh, setRefresh] = useState(undefined);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState('');
+  const [currentPlaylistName, setCurrentPlaylistName] = useState('');
 
   const history = useHistory();
+  
+  var userName = '';
+  
+  if (LoggedIn()) {
+  	
+  	userName = localStorage.getItem('user');
+  }
 
   useEffect(() => {
     axios.get(backendurl + 'playlists/list')
@@ -27,6 +39,25 @@ export default function Playlists() {
         console.log(response.data);
         if (response.data){
           setPlaylists(response.data);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        setError(error);
+      });
+  }, [refresh])
+  
+  
+  useEffect(() => {
+    axios.get(backendurl + 'users/list')
+      .then((response) => {
+        console.log(response.data);
+        if (response.data){
+          for (let user of response.data){
+          	if (user.userName == userName) {
+          		setUser(user);
+          	}
+          }
         }
       })
       .catch(error => {
@@ -83,19 +114,27 @@ export default function Playlists() {
       )}
 
       <div className="playlists-list">
+      	
         {playlists ? playlists.map((playlist, index) => (
+
           <PlaylistItem
             key={`${playlist.playlistName}-${index}`}
             name={playlist.playlistName}
             likeCount={playlist.likes.length}
             songs={playlist.songs}
+            userLikes={user}
           />
+          
+
         )) : (
           <div className="playlists-empty">
             <p>Sorry there are no playlists right now... Come back later </p>
           </div>
         )}
+
+
       </div>
+
       <div>
         <button className="page-button" onClick={() => setIsModalOpen(true)}> Add New Playlist </button>
       </div>

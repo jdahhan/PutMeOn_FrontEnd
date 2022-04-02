@@ -1,3 +1,9 @@
+.like-playlist {
+  text-align: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid #94A3B8;
+}
 .playlist-item {
   width: 100%;
   padding: 10px;
@@ -16,3 +22,4 @@
 .song-list-item{
   padding-left: 5vw;
 }
+
