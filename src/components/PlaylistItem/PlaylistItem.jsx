@@ -6,14 +6,16 @@ import './playlistitem.css';
 import LoggedIn from '../LoggedIn/LoggedIn';
 import {backendurl} from '../../config';
 
-
 export default function PlaylistItem({name, likeCount, songs, userLikes}) {
   const [active, setActive] = useState(false);
   const [error, setError] = useState(undefined);
   const [refresh, setRefresh] = useState(undefined);
+
+  const [songLikes, setSongLikes] = useState(likeCount);
   
   if (userLikes) {
 	  if (userLikes.likedPlaylists.includes(name)){
+	 
 	     var button_text = "Unlike";
 	  }
 	  else {
@@ -21,10 +23,13 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
 	  }
   }
   
+  const [buttonText, setButtonText] = useState(button_text);
+  
   const handleLikePlaylist = () => {
     axios.post(backendurl + '/users/' + userLikes.userName + '/like_playlist/' + name)
       .then(() => {
-	
+	setButtonText("Unlike");
+	setSongLikes(songLikes + 1);
 	setRefresh(refresh + 1);
       })
       .catch(error => {
@@ -36,7 +41,8 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
   const handleUnlikePlaylist = () => {
     axios.post(backendurl + '/users/' + userLikes.userName + '/unlike_playlist/' + name)
       .then(() => {
-	
+	setButtonText("Like");
+	setSongLikes(songLikes - 1);
 	setRefresh(refresh + 1);
       })
       .catch(error => {
@@ -49,7 +55,7 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
   	<div>
     <div className="playlist-item" onClick={()=>{setActive(!active)}}>
       <p class = 'child'> {name} </p>
-      <p class = 'child'> {likeCount} </p>
+      <p class = 'child'> {songLikes} </p>
       
       
       {active &&
@@ -72,15 +78,15 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
 
           <button id="like_button"
           onClick={() => {
-          	if (button_text == "Like") { 
-			handleLikePlaylist();
+          	if (buttonText == "Unlike"){
+			handleUnlikePlaylist();
 		}
 		else {
-			handleUnlikePlaylist();
+			handleLikePlaylist();
 		}
 
           }}>
-          {button_text}
+          {buttonText}
           </button>
 
     
