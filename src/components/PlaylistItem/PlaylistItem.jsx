@@ -17,13 +17,18 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
 	  if (userLikes.likedPlaylists.includes(name)){
 	 
 	     var button_text = "Unlike";
+
 	  }
 	  else {
 	     var button_text = "Like";
 	  }
   }
   
-  const [buttonText, setButtonText] = useState(button_text);
+  
+  const [buttonText, setButtonText] = useState("Click to Like/Unlike");
+  
+  console.log("button_text:" + button_text)
+  console.log("buttonText:" + buttonText)
   
   const handleLikePlaylist = () => {
     axios.post(backendurl + '/users/' + userLikes.userName + '/like_playlist/' + name)
@@ -74,19 +79,31 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
     </div>
     
     {LoggedIn() && 
-      <div className="like-playlist">
-
+      <div className = "like-playlist">
+	
           <button id="like_button"
           onClick={() => {
           	if (buttonText == "Unlike"){
 			handleUnlikePlaylist();
 		}
-		else {
+		else if (buttonText == "Like"){
 			handleLikePlaylist();
+		}
+		else {
+			setButtonText(button_text);
 		}
 
           }}>
-          {buttonText}
+          {buttonText} 
+          </button>
+
+
+          <button id="add_song_button"
+          onClick={() => {
+
+
+          }}>
+          Add Song
           </button>
 
     
