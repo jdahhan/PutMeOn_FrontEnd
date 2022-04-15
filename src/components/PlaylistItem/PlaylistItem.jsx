@@ -71,9 +71,9 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
       <div className='modal'>
         <div>
         {songs.length ? songs.map((song, index) => (
-          <div className = "song-list-item">{index+1}. {song}</div>
+          <div>{index+1}. {song}</div>
         )) : (
-          <div className = "song-list-item">This playlist is currently empty.</div>
+          <div>This playlist is currently empty.</div>
         )}
         </div>
         <div className='addsong'>
