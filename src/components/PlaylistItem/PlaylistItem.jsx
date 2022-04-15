@@ -10,32 +10,35 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
   const [active, setActive] = useState(false);
   const [error, setError] = useState(undefined);
   const [refresh, setRefresh] = useState(undefined);
-
+  const [song, setSong] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
   const [songLikes, setSongLikes] = useState(likeCount);
+  const handleAddSong = () => {
+    axios.post(backendurl + `playlists/${name}/add_song/${song}`).then(()=>{
+      songs.push(song);
+      setModalOpen(false);
+    }).catch((e)=>{
+      setError(e);
+    })
+  };
   
   if (userLikes) {
 	  if (userLikes.likedPlaylists.includes(name)){
-	 
 	     var button_text = "Unlike";
-
-	  }
-	  else {
+	  } else {
 	     var button_text = "Like";
 	  }
   }
   
-  
   const [buttonText, setButtonText] = useState("Click to Like/Unlike");
   
-  console.log("button_text:" + button_text)
-  console.log("buttonText:" + buttonText)
   
   const handleLikePlaylist = () => {
     axios.post(backendurl + '/users/' + userLikes.userName + '/like_playlist/' + name)
       .then(() => {
-	setButtonText("Unlike");
-	setSongLikes(songLikes + 1);
-	setRefresh(refresh + 1);
+        setButtonText("Unlike");
+        setSongLikes(songLikes + 1);
+        setRefresh(refresh + 1);
       })
       .catch(error => {
         setError(error);
@@ -46,9 +49,9 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
   const handleUnlikePlaylist = () => {
     axios.post(backendurl + '/users/' + userLikes.userName + '/unlike_playlist/' + name)
       .then(() => {
-	setButtonText("Like");
-	setSongLikes(songLikes - 1);
-	setRefresh(refresh + 1);
+        setButtonText("Like");
+        setSongLikes(songLikes - 1);
+        setRefresh(refresh + 1);
       })
       .catch(error => {
         setError(error);
@@ -58,21 +61,29 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
 
   return (
   	<div>
-    <div className="playlist-item" onClick={()=>{setActive(!active)}}>
-      <p class = 'child'> {name} </p>
+    <div className="playlist-item">
+      <div className='playlist-title' onClick={()=>{setActive(!active)}}>
+      <p class = 'child' > {name} </p>
       <p class = 'child'> {songLikes} </p>
-      
+      </div>
       
       {active &&
-      <div>
-        <br></br>
+      <div className='modal'>
+        <div>
         {songs.length ? songs.map((song, index) => (
           <div className = "song-list-item">{index+1}. {song}</div>
         )) : (
           <div className = "song-list-item">This playlist is currently empty.</div>
         )}
-      
-     
+        </div>
+        <div className='addsong'>
+          <input placeholder='new song' value={song} onChange={(e) => {setSong(e.target.value)}}></input>
+          <button onClick={
+            ()=>{
+              handleAddSong();
+              setSong('');
+            }}>Add Song</button>
+          </div>  
 	</div>
       }
 
@@ -80,35 +91,20 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
     
     {LoggedIn() && 
       <div className = "like-playlist">
-	
-          <button id="like_button"
-          onClick={() => {
-          	if (buttonText == "Unlike"){
-			handleUnlikePlaylist();
-		}
-		else if (buttonText == "Like"){
-			handleLikePlaylist();
-		}
-		else {
-			setButtonText(button_text);
-		}
+        <button id="like_button"
+        onClick={() => {
+          if (buttonText == "Unlike"){
+            handleUnlikePlaylist();
+          } else if (buttonText == "Like"){
+            handleLikePlaylist();
+          } else {
+            setButtonText(button_text);
+          }
+        }}>
+        {buttonText} 
+        </button>
 
-          }}>
-          {buttonText} 
-          </button>
-
-
-          <button id="add_song_button"
-          onClick={() => {
-
-
-          }}>
-          Add Song
-          </button>
-
-    
-     </div>
-    }
+     </div>}
     </div>
     );
     

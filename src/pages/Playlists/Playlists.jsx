@@ -11,6 +11,7 @@ import LoggedIn from '../../components/LoggedIn/LoggedIn';
 
 
 import './playlists.css';
+import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 
 export default function Playlists() {
   const [playlists, setPlaylists] = useState(undefined);
@@ -29,7 +30,6 @@ export default function Playlists() {
   var userName = '';
   
   if (LoggedIn()) {
-  	
   	userName = localStorage.getItem('user');
   }
 
@@ -67,7 +67,7 @@ export default function Playlists() {
   }, [refresh])
 
   const handleCreatePlaylist = () => {
-    axios.post(backendurl + `playlists/create/${newPlaylistName}`)
+    axios.post(backendurl + `playlists/create/${userName}/${newPlaylistName}`)
       .then(() => {
         setIsModalOpen(false);
         setRefresh(refresh + 1);
@@ -89,7 +89,11 @@ export default function Playlists() {
             onChange={(e) => setNewPlaylistName(e.target.value)}
           />
           <div className="create-actions">
-            <button className="button" onClick={handleCreatePlaylist}>Create New Playlist</button>
+            <button className="button" onClick={(e) => {
+              setNewPlaylistName('');
+              handleCreatePlaylist();
+              }}>
+            Create New Playlist</button>
             <button className="button" onClick={() => setIsModalOpen(false)}> Cancel </button>
           </div>
         </div>
@@ -99,12 +103,6 @@ export default function Playlists() {
         <PageTitle
           text="Playlists"
         />
-        <button
-          onClick={() => history.push('/')}
-          className="button"
-        >
-          {"<--"}Go Back Home
-        </button>
       </div>
 
       {error && (
@@ -138,6 +136,16 @@ export default function Playlists() {
       <div>
         <button className="page-button" onClick={() => setIsModalOpen(true)}> Add New Playlist </button>
       </div>
+      <div>
+      <button
+          onClick={() => history.push('/')}
+          className="button"
+        >
+          {"<--"}Go Back Home
+        </button>
+        
+      </div>
+      <br></br>
     </div>
   )
 }
