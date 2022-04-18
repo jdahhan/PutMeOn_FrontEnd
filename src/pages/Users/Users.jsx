@@ -45,6 +45,11 @@ export default function Users() {
 
   return (
     <div className="content">
+    
+      <div className="rooms-header">
+        <h1>Users</h1>
+      </div>
+              
       {isModalOpen && 
         <div className="create-modal">
           <input
@@ -66,16 +71,6 @@ export default function Users() {
           </div>
         </div>
       }
-  
-      <div className="rooms-header">
-        <h1>Users</h1>
-        <button
-          onClick={() => history.push('/')}
-          className="button"
-        >
-          {"<--"}Go Back Home
-        </button>
-      </div>
 
       {error && (
         <div className="rooms-error-box">
@@ -101,6 +96,14 @@ export default function Users() {
       <div>
         <button className="page-button" onClick={() => setIsModalOpen(true)}> Add New User </button>
       </div>
+      
+        <button
+          onClick={() => history.push('/')}
+          className="button"
+        >
+          {"<--"}Go Back Home
+        </button>
+
     </div>
   )
 }
