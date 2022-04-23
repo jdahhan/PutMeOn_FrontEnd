@@ -6,6 +6,7 @@ import Playlists from './pages/Playlists/Playlists';
 import Users from './pages/Users/Users';
 import Login from './pages/Login/Login';
 import NewAccount from './pages/NewAccount/NewAccount';
+import Friends from './pages/Friends/Friends';
 import './App.css';
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
             </Route>
             <Route exact={true} path={'/NewAccount'}>
               <NewAccount />
+            </Route>
+            <Route exact={true} path={'/friends'}>
+              <Friends />
             </Route>
 
           </Switch>

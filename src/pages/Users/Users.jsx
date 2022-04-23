@@ -62,6 +62,7 @@ export default function Users() {
           <UserItem
             key={`${user.userName}-${index}`}
             name={user.userName}
+            friends={user.friends}
           />
         )) : (
           <div className="users-empty">

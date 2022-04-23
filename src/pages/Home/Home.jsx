@@ -34,6 +34,12 @@ export default function Home(){
       </button> 
       {LoggedIn()
         ?<div className='content'>
+         <button className='page-button'
+          onClick={() => navigateToPage('/friends')}>
+          View Friends
+          </button>
+          
+          
           <button className='page-button'
           onClick={() => {
             localStorage.setItem('user', '');
