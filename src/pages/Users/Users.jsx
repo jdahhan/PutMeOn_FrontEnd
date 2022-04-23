@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
+import UserItem from '../../components/UserItem/UserItem';
 
 import {backendurl} from '../../config';
 
@@ -46,55 +47,27 @@ export default function Users() {
   return (
     <div className="content">
     
-      <div className="rooms-header">
+      <div className="users-header">
         <h1>Users</h1>
       </div>
               
-      {isModalOpen && 
-        <div className="create-modal">
-          <input
-            className="user-input"
-            placeholder="User Name"
-            value={newUserName}
-            onChange={(e) => setNewUserName(e.target.value)}
-          />
-          <input
-            className="user-input"
-            placeholder="password"
-            type="password"
-            value={newPassWord}
-            onChange={(f) => setNewPassWord(f.target.value)}
-          />
-          <div className="create-actions">
-            <button className="button" onClick={handleCreateUser}>Create New User</button>
-            <button className="button" onClick={() => setIsModalOpen(false)}> Cancel </button>
-          </div>
-        </div>
-      }
-
       {error && (
-        <div className="rooms-error-box">
+        <div className="users-error-box">
           <p>{error.toString()}</p>
         </div>
       )}
 
-      <div className="rooms-list">
+      <div className="users-list">
         {users ? users.map((user, index) => (
-          <div 
-            className="user-item"
+          <UserItem
             key={`${user.userName}-${index}`}
-          >
-            <p>{user.userName}</p>
-          </div>
+            name={user.userName}
+          />
         )) : (
-          <div className="rooms-empty">
+          <div className="users-empty">
             <p>Sorry there are no users right now... Come back later </p>
           </div>
         )}
-      </div>
-
-      <div>
-        <button className="page-button" onClick={() => setIsModalOpen(true)}> Add New User </button>
       </div>
       
         <button
