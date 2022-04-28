@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 
 import {backendurl} from '../../config';
 
-import UserItem from '../../components/UserItem/UserItem';
+import FriendItem from '../../components/FriendItem/FriendItem';
 
 import './friends.css';
 
@@ -105,10 +105,10 @@ export default function Friends() {
             className="user-item"
             key={`${friends.userName}-${index}`}
           >
-          <UserItem
+          <FriendItem
             key={`${friends.userName}-${index}`}
             name={friends.userName}
-            friends={false}
+            playlists={friends.ownedPlaylists}
           />
           </div>
         )) : (

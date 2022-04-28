@@ -63,27 +63,31 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
   	<div>
     <div className="playlist-item">
       <div className='playlist-title' onClick={()=>{setActive(!active)}}>
-      <p class = 'child' > {name} </p>
-      <p class = 'child'> {songLikes} </p>
+      <p className= 'child' > {name} </p>
+      <p className= 'child'> {songLikes} </p>
       </div>
       
       {active &&
       <div className='modal'>
         <div>
         {songs.length ? songs.map((song, index) => (
-          <div>{index+1}. {song}</div>
+          <div key={`${song}-${index}`}>{index+1}. {song}</div>
         )) : (
           <div>This playlist is currently empty.</div>
         )}
         </div>
-        <div className='addsong'>
-          <input placeholder='new song' value={song} onChange={(e) => {setSong(e.target.value)}}></input>
-          <button onClick={
-            ()=>{
-              handleAddSong();
-              setSong('');
-            }}>Add Song</button>
+        {LoggedIn() && 
+          <div className='addsong'>
+            <input placeholder='new song' value={song} onChange={(e) => {setSong(e.target.value)}}></input>
+            <button onClick={
+              ()=>{
+                handleAddSong();
+                setSong('');
+              }}>
+                Add Song
+              </button>
           </div>  
+        }
 	</div>
       }
 

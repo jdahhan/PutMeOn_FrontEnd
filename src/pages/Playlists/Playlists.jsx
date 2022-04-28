@@ -27,12 +27,9 @@ export default function Playlists() {
 
   const history = useHistory();
   
-  var userName = '';
   
-  if (LoggedIn()) {
-  	userName = localStorage.getItem('user');
-  }
-
+  const userName = () => {localStorage.getItem('user')}
+  
   useEffect(() => {
     axios.get(backendurl + 'playlists/list')
       .then((response) => {
@@ -80,7 +77,7 @@ export default function Playlists() {
 
   return (
     <div className="content">
-      {isModalOpen && 
+      {(isModalOpen && LoggedIn()) && 
         <div className="create-modal">
           <input
             className="room-input"
@@ -134,7 +131,9 @@ export default function Playlists() {
       </div>
 
       <div>
-        <button className="page-button" onClick={() => setIsModalOpen(true)}> Add New Playlist </button>
+        {LoggedIn() && 
+          <button className="page-button" onClick={() => setIsModalOpen(true)}> Add New Playlist </button>
+        }
       </div>
       <div>
       <button
