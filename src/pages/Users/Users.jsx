@@ -6,18 +6,16 @@ import UserItem from '../../components/UserItem/UserItem';
 import {backendurl} from '../../config';
 
 import './users.css';
+import LoggedIn from '../../components/LoggedIn/LoggedIn';
 
 export default function Users() {
   const [users, setUsers] = useState(undefined);
   const [error, setError] = useState(undefined);
-
   const [refresh, setRefresh] = useState(0);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newUserName, setNewUserName] = useState('');
-  const [newPassWord, setNewPassWord] = useState('');
-
+  const [user, setUser] = useState(undefined);
   const history = useHistory();
+  const [friends, setFriends] = useState([]);
+  const [outgoings, setOutgoing] = useState([]);
 
   useEffect(() => {
     axios.get(backendurl + 'users/list')
@@ -30,19 +28,14 @@ export default function Users() {
         setError(error);
         console.log(error);
       });
+    if (LoggedIn()){
+      axios.get(backendurl + "users/get/"+localStorage.getItem('user'))
+      .then((response) => {
+        setFriends(response.data.friends);
+        setOutgoing(response.data.outgoingRequests);
+      })
+    }
   }, [refresh])
-
-  const handleCreateUser = () => {
-    axios.post(backendurl + 'users/create/' + newUserName + "_" + newPassWord)
-      .then(() => {
-        setIsModalOpen(false);
-        setRefresh(refresh + 1);
-      })
-      .catch(error => {
-        setError(error);
-        console.log(error);
-      })
-  }
 
   return (
     <div className="content">
@@ -62,7 +55,8 @@ export default function Users() {
           <UserItem
             key={`${user.userName}-${index}`}
             name={user.userName}
-            friends={user.friends}
+            friend={friends.includes(user.userName)}
+            outgoing={outgoings.includes(user.userName)}
           />
         )) : (
           <div className="users-empty">

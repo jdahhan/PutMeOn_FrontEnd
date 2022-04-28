@@ -7,65 +7,50 @@ import LoggedIn from '../LoggedIn/LoggedIn';
 import {backendurl} from '../../config';
 
 const userName = localStorage.getItem('user');
-var friended;
 
-export default function UserItem({name, friends}) {
-    console.log("name: ", name)
-    console.log("friends: ", friends)
-    
-    
-    
-    if (friends) {
-	    if (friends.includes(userName)) {
-	    	console.log("you are friends with", name)
-	    	friended = true;
-	    }
-	    else if (name != userName) {
-	        console.log("not friends with", name)
-	    	friended = false;
-	    }
+export default function UserItem({name, friend, outgoing, reload}) {
+    const [isFriend, setFriend] = useState(friend);
+    const [isOutgoing, setOutgoing] = useState(outgoing);
+    const [modal, setModal] = useState(false);
+    const [error, setError] = useState(undefined)
+    const handleRemove = () => {
+        axios.post(backendurl + "users/" + userName + '/remove_friend/' + name)
+            .then( () =>{
+                setFriend(false);
+            })
+            .catch((error) =>{
+                setError(error);
+                console.log(error)
+            })
     }
-    
+    const handleRequest = () => {
+        axios.post(backendurl + "users/" + userName + '/req_friend/' + name)
+            .then( () =>{
+                setOutgoing(true);
+            })
+            .catch((error) =>{
+                setError(error);
+                console.log(error)
+            })
+    }
     return (
     <div>
 	    <div className='user-item'>
-
-		<p>{name}</p>
-	       
-	       
+		    <div onClick={()=>{setModal(!modal)}}>{name}</div>
+            {(modal && localStorage.getItem('user') !== "" && localStorage.getItem('user') !== name) && 
+                <div className='modal'>
+                    {isFriend && 
+                        <button onClick={() => {handleRemove()}}>Remove Friend</button>
+                    }
+                    {isOutgoing && 
+                        <button>Cancel Request</button>
+                    }
+                    {(!isOutgoing && !isFriend) &&
+                        <button onClick={() => {handleRequest()}}>Send Request</button>
+                    }
+                </div>
+            }
 	    </div>
-	    
-	    {friends==false &&
-    	    // friends w user, button says unfriend
-        
-       
-	    <div className='friend-button'>
-	    <button
-            onClick={() => true}
-            className="button"
-            >
-          	Unfriend
-            </button>
-	    </div>
-	    
-	    }
-	    
-	    {friends && !friended &&
-	    
-    	    // not friends w user, button says add friend
-        
-       
-	    <div className='friend-button'>
-	    <button
-            onClick={() => true}
-            className="button"
-            >
-          	Add Friend
-            </button>
-	    </div>
-	    
-	    }
-	    
     </div>	    
     )
     
