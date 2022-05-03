@@ -28,7 +28,7 @@ export default function Playlists() {
   const history = useHistory();
   
   
-  const userName = () => {localStorage.getItem('user')}
+  const userName = localStorage.getItem('user');
   
   useEffect(() => {
     axios.get(backendurl + 'playlists/list')
@@ -48,7 +48,7 @@ export default function Playlists() {
   useEffect(() => {
     axios.get(backendurl + 'users/list')
       .then((response) => {
-        console.log(response.data);
+        console.log("get user list data",response.data);
         if (response.data){
           for (let user of response.data){
           	if (user.userName == userName) {
