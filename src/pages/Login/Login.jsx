@@ -14,8 +14,9 @@ export default function Login(){
   
   const handleUserLogin = () => {
     axios.get(backendurl + `users/login/${user}_${password}`)
-      .then(() => {
+      .then((response) => {
         localStorage.setItem('user', user)
+        localStorage.setItem('token', response.data.token)
         history.push('/')
       })
       .catch(() => {

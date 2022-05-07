@@ -39,7 +39,6 @@ export default function Home(){
           View Friends
           </button>
           
-          
           <button className='page-button'
           onClick={() => {
             localStorage.setItem('user', '');
@@ -47,6 +46,7 @@ export default function Home(){
           }}>
           Logout
           </button>
+
       </div>
         :<div className='content'>
           <button

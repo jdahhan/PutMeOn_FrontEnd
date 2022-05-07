@@ -11,7 +11,6 @@ import LoggedIn from '../../components/LoggedIn/LoggedIn';
 
 
 import './playlists.css';
-import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 
 export default function Playlists() {
   const [playlists, setPlaylists] = useState(undefined);
@@ -23,12 +22,13 @@ export default function Playlists() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState('');
-  const [currentPlaylistName, setCurrentPlaylistName] = useState('');
+  const [userPlaylists, setUserPlaylists] = useState([]);
 
   const history = useHistory();
   
   
-  const userName = () => {localStorage.getItem('user')}
+  const userName = localStorage.getItem('user')
+  const token = localStorage.getItem('token')
   
   useEffect(() => {
     axios.get(backendurl + 'playlists/list')
@@ -64,7 +64,8 @@ export default function Playlists() {
   }, [refresh])
 
   const handleCreatePlaylist = () => {
-    axios.post(backendurl + `playlists/create/${userName}/${newPlaylistName}`)
+    let body = {'userName': userName, 'token': token};
+    axios.post(backendurl + `playlists/create/${userName}/${newPlaylistName}`, body)
       .then(() => {
         setIsModalOpen(false);
         setRefresh(refresh + 1);
@@ -118,6 +119,7 @@ export default function Playlists() {
             likeCount={playlist.likes.length}
             songs={playlist.songs}
             userLikes={user}
+            editable={(playlist.owner == userName)}
           />
           
 

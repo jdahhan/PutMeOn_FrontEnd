@@ -6,7 +6,7 @@ import './playlistitem.css';
 import LoggedIn from '../LoggedIn/LoggedIn';
 import {backendurl} from '../../config';
 
-export default function PlaylistItem({name, likeCount, songs, userLikes}) {
+export default function PlaylistItem({name, likeCount, songs, userLikes, editable}) {
   const [active, setActive] = useState(false);
   const [error, setError] = useState(undefined);
   const [refresh, setRefresh] = useState(undefined);
@@ -76,7 +76,7 @@ export default function PlaylistItem({name, likeCount, songs, userLikes}) {
           <div>This playlist is currently empty.</div>
         )}
         </div>
-        {LoggedIn() && 
+        {(LoggedIn() && editable) && 
           <div className='addsong'>
             <input placeholder='new song' value={song} onChange={(e) => {setSong(e.target.value)}}></input>
             <button onClick={

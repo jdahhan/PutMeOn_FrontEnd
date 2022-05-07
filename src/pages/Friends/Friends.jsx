@@ -20,7 +20,7 @@ export default function Friends() {
   const userName = localStorage.getItem('user');
   var userObj;
   var found = false;
-  
+{/*
   useEffect(() => {
     axios.get(backendurl + 'users/list')
       .then((response) => {
@@ -34,13 +34,9 @@ export default function Friends() {
           		setUser(username);
           	}
           }
-          
-          
           if (found) {
-          
           	//console.log("this the logged in user:")
           	//console.log(userName)
-          
 		  var friends_list = [];
 		  //console.log("friends are:")
 		  //console.log(userObj.friends)
@@ -53,19 +49,14 @@ export default function Friends() {
 		      else{
 		      	//console.log("this user is not in you friends list:")
 		      	//console.log(username)
-		      }
-		      
-		  }
-		  
-		  
+		      }   
+		  }	  
 		  if (friends_list.length > 0) {
 		  	setFriends(friends_list);
 			  //console.log("these are the friends");
 			  //console.log(friends);
-		  
 		  }
 		  else {
-		  	
 		  	//console.log("no friends :(")
 		  	//console.log(friends)
 		  }
@@ -81,10 +72,22 @@ export default function Friends() {
         console.log(error);
       });
   }, [refresh])
-
-  function navigateToPage(path) {
+*/}
+  useEffect(() => {
+    axios.get(backendurl + 'users/get_friends/' + userName)
+      .then((response) => {
+        setFriends(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      })
+    }, [refresh])
+  
+    function navigateToPage(path) {
     history.push(path);
   }
+
+  console.log(friends)
   
   return (
     <div className="content">
@@ -108,7 +111,8 @@ export default function Friends() {
           <FriendItem
             key={`${friends.userName}-${index}`}
             name={friends.userName}
-            playlists={friends.ownedPlaylists}
+            friends={friends.friends}
+            user={user}
           />
           </div>
         )) : (

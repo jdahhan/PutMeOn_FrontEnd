@@ -8,6 +8,9 @@ import {backendurl} from '../../config';
 import './users.css';
 import LoggedIn from '../../components/LoggedIn/LoggedIn';
 
+const userName = () => (localStorage.getItem('user'));
+
+
 export default function Users() {
   const [users, setUsers] = useState(undefined);
   const [error, setError] = useState(undefined);
@@ -18,7 +21,9 @@ export default function Users() {
     axios.get(backendurl + 'users/list')
       .then((response) => {
         if (response.data){
-          setUsers(response.data);
+          const lst = response.data.filter(user => userName() !== user.userName);
+          console.log(lst)
+          setUsers(lst);
         }
       })
       .catch(error => {
@@ -50,14 +55,13 @@ export default function Users() {
 
       <div className="users-list">
         {users ? users.map((user, index) => (
-          <UserItem
-            key={`${user.userName}-${index}`}
-            name={user.userName}
-            friend={checkList(user.friends)}
-            outgoing={checkList(user.incomingRequests)}
-            incoming={checkList(user.outgoingRequests)}
-          />
-        )) : (
+        <UserItem
+              key={`${user.userName}-${index}`}
+              name={user.userName}
+              friend={checkList(user.friends)}
+              outgoing={checkList(user.incomingRequests)}
+              incoming={checkList(user.outgoingRequests)}
+          />)) : (
           <div className="users-empty">
             <p>Sorry there are no users right now... Come back later </p>
           </div>
