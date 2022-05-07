@@ -27,13 +27,9 @@ export default function Playlists() {
   const history = useHistory();
   
   
-<<<<<<< HEAD
   const userName = localStorage.getItem('user')
   const token = localStorage.getItem('token')
-=======
-  const userName = localStorage.getItem('user');
->>>>>>> 69dc73bcf882c9ad130121c886617d77e2b95266
-  
+
   useEffect(() => {
     axios.get(backendurl + 'playlists/list')
       .then((response) => {
