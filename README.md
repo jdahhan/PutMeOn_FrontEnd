@@ -4,7 +4,7 @@ Frontend deployed to https://putmeon.netlify.app/
 API currently hosted on https://put-me-on.herokuapp.com/         
 Backend repo at https://github.com/ecabreja623/PutMeOn      
 
-# Current Capabilities
+## Current Capabilities
 - Users can view all users and playlists.
 - Users can create/delete their accounts and log in with token based authentication that expires over time.
 - Authenticated users can create/delete playlists and add/delete songs from playlists.
