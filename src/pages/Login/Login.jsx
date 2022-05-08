@@ -13,7 +13,7 @@ export default function Login(){
   const history = useHistory();
   
   const handleUserLogin = () => {
-    axios.get(backendurl + `users/login/`, {"userName": user, "password": password})
+    axios.patch(backendurl + `users/login/`, {"userName": user, "password": password})
       .then((response) => {
         localStorage.setItem('user', user)
         localStorage.setItem('token', response.data.token)

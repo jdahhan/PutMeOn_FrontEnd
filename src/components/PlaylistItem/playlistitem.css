@@ -37,4 +37,11 @@
   text-align: center;
   width: 50%;
 }
-
+.songitem{
+  width: 10vw;
+  display: flex;
+  justify-content: space-between;
+}
+.delsong{
+  color: red;
+}

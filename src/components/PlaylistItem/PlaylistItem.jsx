@@ -6,17 +6,32 @@ import './playlistitem.css';
 import LoggedIn from '../LoggedIn/LoggedIn';
 import {backendurl} from '../../config';
 
-export default function PlaylistItem({name, likeCount, songs, userLikes, editable}) {
+
+
+export default function PlaylistItem({name, likeCount, songs, userLikes, editable, parentR}) {
   const [active, setActive] = useState(false);
   const [error, setError] = useState(undefined);
   const [refresh, setRefresh] = useState(undefined);
   const [song, setSong] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [songLikes, setSongLikes] = useState(likeCount);
+  const token = localStorage.getItem('token')
+  const userName = localStorage.getItem('user')
+
+  const deleteSong = (song, index) => {
+    axios.delete(backendurl + `playlists/${name}/remove_song/${song}`, {"userName": userName, "token": token}).then(() => {
+      songs.splice(index, 1)
+      setActive(false);
+    }).catch((error) => {
+      setError(error)
+      console.log(error)
+    })
+  }
+
   const handleAddSong = () => {
-    axios.post(backendurl + `playlists/${name}/add_song/${song}`).then(()=>{
+    axios.post(backendurl + `playlists/${name}/add_song/${song}`, {"userName": userName, "token": token}).then(()=>{
       songs.push(song);
-      setModalOpen(false);
+      setActive(false);
     }).catch((e)=>{
       setError(e);
     })
@@ -32,7 +47,12 @@ export default function PlaylistItem({name, likeCount, songs, userLikes, editabl
   
   const [buttonText, setButtonText] = useState("Click to Like/Unlike");
   
-  
+  const handleDeletePl = () => {
+    axios.delete(backendurl + "/playlists/delete/" + name).then(() => {
+      parentR()
+    }).catch((error) => setError(error))
+  }
+
   const handleLikePlaylist = () => {
     axios.post(backendurl + '/users/' + userLikes.userName + '/like_playlist/' + name)
       .then(() => {
@@ -71,13 +91,13 @@ export default function PlaylistItem({name, likeCount, songs, userLikes, editabl
       <div className='modal'>
         <div>
         {songs.length ? songs.map((song, index) => (
-          <div key={`${song}-${index}`}>{index+1}. {song}</div>
+          <div className='songitem' key={`${song}-${index}`}><div>{index+1}. {song}</div> {editable && <div className='delsong' onClick={() => {deleteSong(song, index)}}>x</div>}</div>
         )) : (
           <div>This playlist is currently empty.</div>
         )}
         </div>
         {(LoggedIn() && editable) && 
-          <div className='addsong'>
+          <div className='edit'>
             <input placeholder='new song' value={song} onChange={(e) => {setSong(e.target.value)}}></input>
             <button onClick={
               ()=>{
@@ -86,6 +106,7 @@ export default function PlaylistItem({name, likeCount, songs, userLikes, editabl
               }}>
                 Add Song
               </button>
+            <button className='deletebutton' onClick={() => {handleDeletePl()}}>Delete Playlist</button>
           </div>  
         }
 	</div>

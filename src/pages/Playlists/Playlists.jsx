@@ -42,11 +42,8 @@ export default function Playlists() {
         console.log(error);
         setError(error);
       });
-  }, [refresh])
-  
-  
-  useEffect(() => {
-    axios.get(backendurl + 'users/get/' + userName)
+    if (LoggedIn()){
+      axios.get(backendurl + 'users/get/' + userName)
       .then((response) => {
         setUser(response.data)
       })
@@ -54,7 +51,12 @@ export default function Playlists() {
         console.log(error);
         setError(error);
       });
+    }
   }, [refresh])
+  
+  
+  useEffect(() => {
+    }, [refresh])
 
   const handleCreatePlaylist = () => {
     let body = {'userName': userName, 'token': token};
@@ -113,6 +115,7 @@ export default function Playlists() {
             songs={playlist.songs}
             userLikes={user}
             editable={(playlist.owner == userName)}
+            parentR={() => {setRefresh(refresh + 1)}}
           />
           
 
