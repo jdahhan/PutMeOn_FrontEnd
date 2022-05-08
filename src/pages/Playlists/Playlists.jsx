@@ -22,7 +22,7 @@ export default function Playlists() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState('');
-  const [userPlaylists, setUserPlaylists] = useState([]);
+  
 
   const history = useHistory();
   
@@ -46,16 +46,9 @@ export default function Playlists() {
   
   
   useEffect(() => {
-    axios.get(backendurl + 'users/list')
+    axios.get(backendurl + 'users/get/' + userName)
       .then((response) => {
-        console.log("get user list data",response.data);
-        if (response.data){
-          for (let user of response.data){
-          	if (user.userName == userName) {
-          		setUser(user);
-          	}
-          }
-        }
+        setUser(response.data)
       })
       .catch(error => {
         console.log(error);

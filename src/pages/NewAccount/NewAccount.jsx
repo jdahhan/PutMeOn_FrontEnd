@@ -19,7 +19,7 @@ export default function Login(){
         setPassword2('');
     }
     else{
-        axios.post(backendurl + `users/create/${user}_${password1}`)
+        axios.post(backendurl + `users/create/`, {"userName": user, "password": password1})
         .then(() => {
             localStorage.setItem('user', user)
             history.push('/')
