@@ -1,7 +1,7 @@
 # Frontend component for PutMeOn
 
 Frontend deployed to https://putmeon.netlify.app/       
-API currently hosted on https://put-me-on.herokuapp.com/         
+Backend API currently hosted on https://put-me-on.herokuapp.com/         
 Backend repo at https://github.com/ecabreja623/PutMeOn      
 
 ## Current Capabilities
